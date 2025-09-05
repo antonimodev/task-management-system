@@ -63,3 +63,79 @@
 - **Challenge**: Module import errors with psycopg
 
 - **Solution**: Added proper system dependencies in Dockerfile and correct psycopg version in [requirements.txt](django_backend/requirements.txt)
+
+
+
+# DAY 2: Auth/User Endpoints & Restructured URLs
+
+### ✅ JWT Authentication Implementation
+- **JWT Integration**: Added `djangorestframework-simplejwt` to [requirements.txt](django_backend/requirements.txt) for secure token-based authentication.
+
+- **Security by Default**: Configured `DEFAULT_PERMISSION_CLASSES` in [config/settings.py](django_backend/config/settings.py) to require authentication on all endpoints by default. This was a security choice to follow good practices.
+
+- **Token Blacklist**: Integrated `rest_framework_simplejwt.token_blacklist` in `INSTALLED_APPS` to enable secure logout functionality that invalidates tokens on the server side.
+
+### ✅ Custom User Model & Extensibility
+- **AbstractUser**: Implemented custom [`User`](django_backend/apps/users/models.py) model extending Django's `AbstractUser` with additional `nickname` field, following Django documentation recommendations for future scalability.
+
+- **Admin Integration**: Registered custom User model in [apps/users/admin.py](django_backend/apps/users/admin.py) using Django's built-in `UserAdmin` to allow management through admin panel.
+
+- **Database Migration**: Applied `makemigrations users` to properly connect the custom User model with PostgreSQL, ensuring data integrity and proper field constraints.
+
+### ✅ API Architecture & URL Organization
+- **Modular URL Structure**: Restructured URLs by creating dedicated `urls.py` files in [apps/users/](django_backend/apps/users/urls.py) and [apps/common/](django_backend/apps/common/urls.py), promoting separation of concerns and maintainability.
+
+- **RESTful Endpoint Design**: Implemented user management endpoints with proper HTTP methods:
+  - `POST /api/auth/register/` - User registration (public)
+  - `POST /api/auth/login/` - JWT token generation
+  - `POST /api/auth/logout/` - Token invalidation
+  - `GET /api/auth/users/` - User list (admin only)
+  - `GET /api/auth/users/<int:pk>/` - User detail by ID
+  - `PUT /api/auth/users/<int:pk>/update/` - User update by ID
+  - `GET /api/auth/users/me/` - Current user profile
+
+- **URL Parameter Handling**: Instead of manually writing URL with user ID (not viable), I've used Django standard format, `<int:pk>`. This tells the API to expect a number in that part of the address and use it to find the corresponding user in database.
+
+### ✅ Security & Permission Management
+- **Role-Based Access Control**: Implemented differentiated permissions where admin users can access all user data, while regular users can only access their own profiles through `get_queryset()` method overrides.
+
+- **Password Security**: Applied Django's `create_user()` method in [UserSerializer](django_backend/apps/users/serializers.py) to ensure automatic password hashing and `write_only=True` for password fields to prevent exposure in API responses.
+
+- **Authentication Endpoints**: Separated public endpoints (register, login) from protected endpoints using Django REST Framework's permission classes (`AllowAny`, `IsAuthenticated`, `IsAdminUser`).
+
+## Key Technical Decisions
+
+### Authentication Strategy
+- **JWT over Sessions**: Selected JWT tokens over Django's default session-based authentication for API scalability and security.
+
+- **Token Blacklisting**: Chose server-side token invalidation over client-side only logout for enhanced security, preventing token reuse after logout.
+
+### User Model Design
+- **Early Customization**: Implemented custom User model from the beginning to avoid complex migrations later, as recommended by Django documentation for production applications.
+
+- **Minimal Extensions**: Added only essential fields (`nickname`) while maintaining compatibility with Django's built-in authentication system.
+
+## Time Allocation Breakdown
+
+### DAY 2 (Authentication & User Management) - ~8 hours
+- JWT setup and security configuration: 2 hours
+- Custom User model implementation and migrations: 1 hour
+- API endpoints development and testing: 3 hours
+- URL restructuring and organization: 1 hour
+- Documentation: ~45 minutes
+
+Each step in any process involves a considerable amount of research.
+
+## Technical Challenges Faced
+
+### URL Organization & Scalability
+- **Challenge**: While adding content to the `urls.py` file, I realized that grouping all routes in a single file was not scalable or maintainable. After researching best practices in the Django documentation, I discovered that a modular URL structure is the recommended approach for better organization and scalability.
+
+- **Solution**: I restructured the URLs by creating dedicated `urls.py` files for each app, such as `apps/users/urls.py` and `apps/common/urls.py`. This separation allows each app to manage its own routes independently, making the project easier to maintain and extend. Additionally, I used Django's `include()` function in the main `urls.py` file to integrate modular routes, ensuring a clean and scalable structure.
+
+### Learning Curve & Complexity
+- **Challenge**: The second day proved significantly more complex than the first. My limited exposure to Django REST Framework and JWT authentication made it difficult to quickly understand the structure of serializers, views, and endpoints. Adjusting to how Django automates processes behind the scenes has been confusing at times, and the learning curve feels steep, more like driving a race car without much prior experience.
+
+- **Solution**: To address this, I focused on carefully reading official documentation, breaking each step into smaller parts, and testing endpoints directly to confirm understanding. I also ensured migrations were properly created and versioned to keep the project reproducible with docker-compose up. While the process has been frustrating at times, I’m applying everything I know, making steady progress, and gaining confidence.
+
+
