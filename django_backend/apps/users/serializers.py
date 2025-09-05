@@ -10,12 +10,13 @@ class UserSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = User
-		fields = ['id', 'username', 'password', 'email']
+		fields = ['username', 'password', 'nickname', 'email']
 
 	def create(self, validated_data):
 		# create_user() encrypts data
 		return User.objects.create_user(
 			username=validated_data['username'],
 			email=validated_data['email'],
+			nickname=validated_data.get('nickname', ''),
 			password=validated_data['password'],
 		)
