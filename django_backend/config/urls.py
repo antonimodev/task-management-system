@@ -17,10 +17,22 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
-from apps.common.views import health_check, home
+from rest_framework_simplejwt.views import (
+	TokenObtainPairView,
+	TokenRefreshView,
+)
+
+from apps.common.views import ( 
+	health_check,
+	home,
+)
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-	path('health/', health_check),
+    path('admin/', admin.site.urls, name='admin'),
+	path('health/', health_check, name='health_check'),
 	path('', home, name='home'),
+
+	# JWT
+	path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+	path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]
