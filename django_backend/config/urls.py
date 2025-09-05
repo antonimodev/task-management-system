@@ -1,9 +1,4 @@
 """
-URL configuration for core project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.2/topics/http/urls/
-Examples:
 Function views
     1. Add an import:  from my_app import views
     2. Add a URL to urlpatterns:  path('', views.home, name='home')
@@ -15,23 +10,22 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import (
+	path,
+	include,
+)
 
 from rest_framework_simplejwt.views import (
 	TokenObtainPairView,
 	TokenRefreshView,
 )
 
-from apps.common.views import ( 
-	health_check,
-	home,
-)
-
 urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
-	path('health/', health_check, name='health_check'),
-	path('', home, name='home'),
-
+	# COMMON
+	path('', include('apps.common.urls')),
+	# USERS
+	path('api/auth/', include('apps.users.urls')),
 	# JWT
 	path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
 	path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
