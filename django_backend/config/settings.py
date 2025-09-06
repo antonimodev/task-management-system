@@ -17,6 +17,7 @@ INSTALLED_APPS = [
 	'rest_framework', # DRF (Django REST Framework)
 	'rest_framework_simplejwt', # JWT (Json Web Token)
 	'rest_framework_simplejwt.token_blacklist',
+	'django_filters',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

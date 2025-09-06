@@ -13,5 +13,5 @@ urlpatterns = [
 	# USERS
 	path('api/users/', include('apps.users.urls')),
 	# TASK MANAGEMENT
-	# path('api/tasks/', include('apps.tasks.urls')),
+	path('api/tasks/', include('apps.tasks.urls')),
 ]

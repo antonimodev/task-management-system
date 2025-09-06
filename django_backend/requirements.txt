@@ -2,3 +2,4 @@ Django==4.2.0 # LTS (long time support) version
 psycopg[binary]>=3.1.8 # Dependency to connect Django-PostgreSQL
 djangorestframework>=3.14.0 # DRF (Django REST Framework)
 djangorestframework-simplejwt>=5.5.1 # JWT (Json web token)
+django-filter>=25.0 # Django recommends this one to filter

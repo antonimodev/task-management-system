@@ -1,8 +1,12 @@
 from django.urls import path
+from .views import TaskListView
 
 urlpatterns = [
 	# Task Management
-	path('',),
+	path('', TaskListView.as_view(), name='task_list'),
+]
+
+'''
 	path('',),
 	path('<int:pk>/',),
 	path('<int:pk>/',),
@@ -13,9 +17,7 @@ urlpatterns = [
 	path('<int:pk>/comments/',),
 	path('<int:pk>/comments/',),
 	path('<int:pk>/history/',),
-]
 
-'''
 GET /api/tasks/ (with filtering, search, pagination)
 POST /api/tasks/
 GET /api/tasks/{id}/
