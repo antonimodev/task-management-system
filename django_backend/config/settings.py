@@ -27,6 +27,7 @@ INSTALLED_APPS = [
 	# Local apps
 	'apps.common',
 	'apps.tasks',
+	'apps.auth_jwt',
 	'apps.users',
 ]
 

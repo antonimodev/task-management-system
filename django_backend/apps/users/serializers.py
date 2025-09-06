@@ -1,7 +1,12 @@
+from typing import (
+	Dict,
+	Any,
+)
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 
-# get_user_model() to get our AbstractUser
+# get_user_model() to always reference the current user model,
+# ensuring compatibility if iy changes in the future
 User = get_user_model()
 
 class UserSerializer(serializers.ModelSerializer):
@@ -12,7 +17,7 @@ class UserSerializer(serializers.ModelSerializer):
 		model = User
 		fields = ['username', 'password', 'nickname', 'email']
 
-	def create(self, validated_data):
+	def create(self, validated_data: Dict[str, Any]):
 		# create_user() encrypts data
 		return User.objects.create_user(
 			username=validated_data['username'],
