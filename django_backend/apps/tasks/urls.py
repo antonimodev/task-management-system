@@ -1,17 +1,16 @@
 from django.urls import path
-from .views import TaskListView
+from .views import (
+	TaskListView,
+	TaskDetailView,
+)
 
 urlpatterns = [
 	# Task Management
 	path('', TaskListView.as_view(), name='task_list'),
+	path('<int:pk>/', TaskDetailView.as_view(), name='task_detail'),
 ]
 
 '''
-	path('',),
-	path('<int:pk>/',),
-	path('<int:pk>/',),
-	path('<int:pk>/',),
-	path('<int:pk>/',),
 	# Task Operations
 	path('<int:pk>/assign/',),
 	path('<int:pk>/comments/',),

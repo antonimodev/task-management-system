@@ -31,7 +31,7 @@ class Task(models.Model):
 
 	# Relationships
 	created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_tasks')
-	assigned_to = models.ManyToManyField(User, related_name='assigned_tasks')
+	assigned_to = models.ManyToManyField(User, through='TaskAssignment', through_fields=('task', 'user'), related_name='assigned_tasks')
 	tags = models.ManyToManyField(Tag, related_name='tasks')
 	parent_task = models.ForeignKey('self', null=True, on_delete=models.CASCADE, related_name='subtasks')
 
@@ -49,3 +49,20 @@ I am not adding it to strictly follow the provided technical test requirements.
 - Some fields needs more arguments to work properly with Django, so I added
 some of them to make it work
 '''
+
+class TaskAssignment(models.Model):
+	user = models.ForeignKey(User, on_delete=models.CASCADE)
+	task = models.ForeignKey(Task, on_delete=models.CASCADE)
+	assigned_at = models.DateTimeField(auto_now_add=True)
+	assigned_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='assignments_made')
+
+	class Meta:
+		unique_together=('user', 'task')
+		indexes = [
+			models.Index(fields=['user']),
+			models.Index(fields=['task']),
+			models.Index(fields=['assigned_at']),
+		]
+
+	def __str__(self):
+		return f"{self.user.username} assigned to {self.task.title} by {self.assigned_by.username}"

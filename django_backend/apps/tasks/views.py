@@ -13,6 +13,7 @@ class TaskListPagination(PageNumberPagination):
 	page_size_query_param = 'page_size'
 	max_page_size = 30 # To protect max page size of API
 
+# GET POST
 class TaskListView(generics.ListCreateAPIView):
 	queryset = Task.objects.all()
 	serializer_class = TaskSerializer
@@ -24,3 +25,9 @@ class TaskListView(generics.ListCreateAPIView):
 	search_fields = ['title', 'priority']
 	# Filtering
 	filterset_fields = ['status', 'priority', 'assigned_to', 'created_by', 'tags']
+
+# GET PUT PATCH DELETE
+class TaskDetailView(generics.RetrieveUpdateDestroyAPIView):
+	queryset = Task.objects.all()
+	serializer_class = TaskSerializer
+	permission_classes = [IsAuthenticated]
