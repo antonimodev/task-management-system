@@ -6,7 +6,7 @@ from rest_framework import serializers
 from django.contrib.auth import get_user_model
 
 # get_user_model() to always reference the current user model,
-# ensuring compatibility if iy changes in the future
+# ensuring compatibility if it changes in the future
 User = get_user_model()
 
 class UserSerializer(serializers.ModelSerializer):
@@ -20,8 +20,8 @@ class UserSerializer(serializers.ModelSerializer):
 	def create(self, validated_data: Dict[str, Any]):
 		# create_user() encrypts data
 		return User.objects.create_user(
-			username=validated_data['username'],
-			email=validated_data['email'],
-			nickname=validated_data.get('nickname', ''),
-			password=validated_data['password'],
+			username = validated_data['username'],
+			email = validated_data['email'],
+			nickname = validated_data.get('nickname', ''),
+			password = validated_data['password'],
 		)
