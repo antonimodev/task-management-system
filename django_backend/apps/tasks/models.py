@@ -1,5 +1,7 @@
 from django.db import models
+from django.db.models import UniqueConstraint
 from apps.users.models import User
+from apps.common.models import SoftDeleteModel
 
 STATUS_CHOICES = [
 	('pending', 'Pending'),
@@ -20,7 +22,7 @@ class Tag(models.Model):
 	def __str__(self):
 			return self.name
 
-class Task(models.Model):
+class Task(SoftDeleteModel, models.Model):
 	title = models.CharField(max_length=200)
 	description = models.TextField()
 	status = models.CharField(choices=STATUS_CHOICES, max_length=20)
@@ -56,12 +58,10 @@ class TaskAssignment(models.Model):
 	assigned_at = models.DateTimeField(auto_now_add=True)
 	assigned_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='assignments_made')
 
+	# Avoid duplicated combinations of users/tasks
 	class Meta:
-		unique_together=('user', 'task')
-		indexes = [
-			models.Index(fields=['user']),
-			models.Index(fields=['task']),
-			models.Index(fields=['assigned_at']),
+		constraints = [
+			UniqueConstraint(fields=['user', 'task'], name="unique_combination"),
 		]
 
 	def __str__(self):

@@ -5,17 +5,14 @@ def create_default_tags(apps, schema_editor):
     default_tags = [
         'bug',
         'feature',
-        'improvement',
-        'documentation',
-        'research',
         'testing',
-        'maintenance'
-    ]
+        'documentation',
+	]
     for tag_name in default_tags:
         Tag.objects.get_or_create(name=tag_name)
 
-class Migration(migrations.Migration):
 
+class Migration(migrations.Migration):
     dependencies = [
         ('tasks', '0001_initial'),
     ]
