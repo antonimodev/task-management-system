@@ -139,3 +139,72 @@ Each step in any process involves a considerable amount of research.
 - **Solution**: To address this, I focused on carefully reading official documentation, breaking each step into smaller parts, and testing endpoints directly to confirm understanding. I also ensured migrations were properly created and versioned to keep the project reproducible with docker-compose up. While the process has been frustrating at times, I’m applying everything I know, making steady progress, and gaining confidence.
 
 
+
+# DAY 3: Task Management API & Assignment Logic
+
+### ✅ Entrypoint Script & Type Hints
+- **Entrypoint.sh Update**: Updated `entrypoint.sh` and `.env` to automatically create a Django superuser inside the Docker container, making environment setup and Django admin access much easier.
+
+- **Type Hints Addition**: Added type hints throughout the codebase to improve readability and maintainability for all contributors (good practices).
+
+
+### ✅ Task API Implementation
+- **Task & Tag Models**: Implemented core `Task` and `Tag` models in `apps/tasks/models.py`, following requirements.
+
+- **Task List API**: Added `TaskListView` using DRF's `ListCreateAPIView` to support listing and creation of tasks.
+
+- **Pagination, Searching, Filtering**: Integrated DRF pagination, search, and django-filter.
+
+- **Default Tags**: Automated creation of default tags via data migration for immediate usability and easier testing.
+
+### ✅ Task Detail & Assignment
+- **Task Detail Endpoints**: Added `TaskDetailView` with `RetrieveUpdateDestroyAPIView` to support `GET`, `PUT`, `PATCH`, and `DELETE` for `/api/tasks/{id}/`.
+
+- **TaskAssignment Model**: Introduced `TaskAssignment` as a through model for `assigned_to` in `Task`, enabling tracking of who assigned a task, to whom, and when, it was required by subject.
+
+- **Assignment Endpoint (WIP)**: Started development of `/api/tasks/{id}/assign/` endpoint to manage task assignments via API, endpoints still in development.
+
+## Key Technical Decisions
+
+### Automate superuser creation
+- **Script updated**: Entrypoint.sh and .env have been updated to automatically create a Django superuser inside the Docker container. This makes it much easier to set up the environment and access the Django admin panel.
+
+### API Design
+- **RESTful Endpoints**: Followed REST conventions for task detail and assignment endpoints.
+
+- **User permissions related to tasks**: Implemented custom permissions to ensure that only authorized users can assign, create, or view tasks.
+
+### Data Integrity & Usability
+- **Default Data**: Automated creation of default tags for immediate usability, especially for testing purposes.
+
+---
+
+## Time Allocation Breakdown
+
+### DAY 3 (Task API & Assignment) - ~7 hours
+- Update entrypoint.sh script: ~30 minutes
+- Task model and API endpoints: 2 hours
+- Assignment logic and through model: 1.5 hours
+- Filtering, searching, and pagination: 1 hour
+- Migrations and default data: ~30 minutes
+- Documentation and review: ~30 minutes
+- Debugging and learning: 1.5 hours
+
+---
+
+## Technical Challenges Faced
+
+### ForeignKey understanding
+- **Challenge**: ForeignKey seemed a bit tricky because it is different from a primary key and I had never worked with it before.
+
+- **Solution**: I spent time researching to understand how ForeignKey works in Django. In short, a ForeignKey creates a relationship between two models by storing the primary key of one model in another. This allows, for example, a user to be assigned to different tasks.
+
+### DRF Learning Curve
+- **Challenge**: Even on my third day working on this project, I still find it challenging, less than before as I continue to internalize the real structure of Django project based on the MVT or MVC architecture. I'm working to fully understand how models/views/templates and serializers interact, as well as how to use DRF features like generics to quickly build and test API endpoints.
+
+- **Solution**: I'm continuing to research and watch tutorial videos to gradually deepen my understanding. Practice makes perfect.
+
+### Tags Initialization
+- **Challenge**: When I tried to create tasks, I encountered errors because tags could not be assigned if they did not already exist. I considered two options: either create some default tags for testing and leave further improvements for later, or implement functionality to allow users to create their own tags on the fly. The second option would have required significantly more time.
+
+- **Solution**: To prioritize my time, I chose the first option and used a data migration to automatically create default tags for testing and initial use.
