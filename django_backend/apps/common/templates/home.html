@@ -1,18 +1,20 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Task Management System</title>
-	<style>
-		body {
-			background-color: #424242;
-			color: whitesmoke;
-		}
-	</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Sherpa Tribe</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
+<div class="top-bar"></div>
 <body>
-	<h1>Sherpa Task Management System</h1>
-	<p>Basic home</p>
+	<img class="main-logo" src="{% static 'img/sherpatribelogo.png' %}" alt="sherpa_logo">
+    <h1>Sherpa Task Management System</h1>
+    <p class="welcome-msg">Welcome to Sherpa task Management project, you can register here!</p>
+	<div class="button-group">
+        <a href="/api/auth/register"><button> Register </button></a>
+        <a href="/api/auth/login"><button> Login </button></a>
+    </div>
 </body>
 </html>

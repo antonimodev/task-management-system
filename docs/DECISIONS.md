@@ -177,8 +177,6 @@ Each step in any process involves a considerable amount of research.
 ### Data Integrity & Usability
 - **Default Data**: Automated creation of default tags for immediate usability, especially for testing purposes.
 
----
-
 ## Time Allocation Breakdown
 
 ### DAY 3 (Task API & Assignment) - ~7 hours
@@ -189,8 +187,6 @@ Each step in any process involves a considerable amount of research.
 - Migrations and default data: ~30 minutes
 - Documentation and review: ~30 minutes
 - Debugging and learning: 1.5 hours
-
----
 
 ## Technical Challenges Faced
 
@@ -208,3 +204,64 @@ Each step in any process involves a considerable amount of research.
 - **Challenge**: When I tried to create tasks, I encountered errors because tags could not be assigned if they did not already exist. I considered two options: either create some default tags for testing and leave further improvements for later, or implement functionality to allow users to create their own tags on the fly. The second option would have required significantly more time.
 
 - **Solution**: To prioritize my time, I chose the first option and used a data migration to automatically create default tags for testing and initial use.
+
+
+# DAY 4: Backend Optimization, Task Assignment Endpoint & Frontend Integration
+
+### ✅ Backend Optimization & New Endpoints
+- **Migrations Reset**: Reset migrations for `django_backend/apps/tasks/` to resolve migration errors and ensure a clean database state.
+
+- **Task Assignment Endpoint**: Added `TaskAssignView` to `apps/tasks/views.py` with a custom `POST` method, enabling task assignment logic and preparing the backend for future frontend integration.
+
+- **API Route Added**: Registered the new `POST /api/tasks/{id}/assign/` endpoint in `apps/tasks/urls.py` for assigning tasks to users.
+
+- **Efficient Querying**: Applied `select_related` and `prefetch_related` in `apps/tasks/models.py` to optimize database queries, especially for models with multiple relationships.
+
+- **Soft Delete Implementation**: Introduced an abstract `SoftDeleteModel` in `apps/common/models.py`. This allows multiple models (such as tasks and users) to inherit soft delete functionality, reducing code duplication and avoiding unnecessary database tables.
+
+### ✅ Migrations & Data Integrity
+- **Migrations Applied**: Ran and applied migrations from previous changes to ensure all models and database schema updates are reflected and consistent.
+
+### ✅ Frontend Integration & UI Improvements
+- **Static Files Organization**: Created `django_backend/apps/common/static` with organized `css` and `img` folders for better static file management.
+
+- **Basic UI Implementation**: Developed a simple UI for the main page (`home.html`) to provide user-friendly navigation and a visual entry point to the application.
+
+- **Registration Template**: Added a `register.html` template, laying the groundwork for a new view that will handle user registration through HTML forms and enable seamless HTML-to-HTML redirection.
+
+- **Frontend-API Connection Research**: Investigated best practices for connecting Django templates with API endpoints, concluding that server-side rendered forms should submit data directly to the appropriate API endpoints for maintainability and clarity.
+
+## Key Technical Decisions
+
+- **Efficient Relationship Handling**: Used `select_related` and `prefetch_related` only where necessary (in the Task model) to optimize performance.
+
+- **Reusable Soft Delete**: Implemented a reusable abstract model for soft deletion, promoting DRY principles and maintainability.
+
+- **Frontend-Backend Separation**: Decided to keep frontend templates and API endpoints logically separated, with forms posting directly to API routes.
+
+## Time Allocation Breakdown
+
+### DAY 4 (Backend Optimization & Frontend Integration) - ~6-7 hours
+- Migrations reset and troubleshooting: ~1 hour
+- Task assignment endpoint and view logic: 2 hours
+- Query optimization and soft delete implementation: 1 hour
+- Static files organization and UI templates: 1 hour
+- Research and connecting frontend to API: 45 minutes
+
+## Technical Challenges Faced
+
+### Model Reference Confusion
+**Challenge**: I struggled to understand how to reference parameters between models, especially when using strings for `through` models or referencing classes declared later in the file.
+
+**Solution**: I researched Django's model reference documentation and experimented with both direct and string-based references, which clarified when and why each approach is used.
+
+### Lack of a Basic UI for Testing
+**Challenge**: Testing endpoints was cumbersome without a basic UI, requiring manual URL navigation and making it hard to maintain session state for authenticated requests. 
+
+**Solution**: I implemented simple HTML templates and used the ModHeader browser extension to set JWT tokens in HTTP headers, streamlining manual testing and session management.
+
+### Framework Conventions & Learning Curve
+**Challenge**: Not using Django REST Framework daily meant many conventions were unfamiliar, slowing down development as I had to frequently research best practices.  
+
+**Solution**: I dedicated extra time to read community resources, ensuring I followed DRF conventions.
+- Documentation and review: ~45 minutes

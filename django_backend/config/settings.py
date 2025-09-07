@@ -115,6 +115,11 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+STATICFILES_DIRS = [
+    BASE_DIR / 'apps' / 'common' / 'static',
+    BASE_DIR / 'apps' / 'auth_jwt' / 'static',
+]
+
 #This static root gonna be used in future
 # STATIC_ROOT = BASE_DIR / 'staticfiles'
 
