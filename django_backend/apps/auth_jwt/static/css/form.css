@@ -2,7 +2,6 @@
 h2 {
     margin: 0 0 1rem 0;
     color: bisque;
-    font-family: Arial, Helvetica, sans-serif;
     font-weight: bold;
     text-align: center;
 }
@@ -11,7 +10,6 @@ h2 {
 .form-container {
     background: #777771;
     color: bisque;
-    font-family: Arial, Helvetica, sans-serif;
     padding: 1rem 1.5rem;
     border-radius: 1rem;
     display: flex;
@@ -59,6 +57,17 @@ h2 {
 	border-style: inset;
 }
 
+/* Two buttons to go back and confirm register */
+.button-row {
+	display:flex;
+	gap: 0.5rem;
+	justify-content: center;
+	margin-top: 1rem;
+}
+
+.button-row a {
+	text-decoration: none;
+}
 
 .register-button {
     margin-top: 0.5rem;

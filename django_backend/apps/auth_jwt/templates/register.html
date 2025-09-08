@@ -3,9 +3,9 @@
 
 {% block title %}Register - Sherpa Tribe{% endblock title %}
 
-{% block register-css %}
-    <link rel="stylesheet" href="{% static 'css/register.css' %}">
-{% endblock register-css %}
+{% block form-css %}
+    <link rel="stylesheet" href="{% static 'css/form.css' %}">
+{% endblock form-css %}
 
 {% block content %}
 	<div class="form-container">
@@ -25,10 +25,14 @@
 				<input type="password" name="password" id="password" required>
 			</div>
 			<div class="form-group">
-				<label for="password2">Confirm Password:</label>
-				<input type="password" name="password2" id="password2" required>
+				<label for="confirm-password">Confirm Password:</label>
+				<input type="password" name="confirm-password" id="confirm-password" required>
 			</div>
-			<button type="register" class="register-button">Confirm register</button>
-		</form>
-	</div>
+			{% comment %} Confirm register button redirects to home, where create task button is there {% endcomment %}
+			<div class="button-row">
+				<a href="{% url 'home' %}" class="register-button">Back</a>
+					<button type="submit" class="register-button">Confirm</button>
+				</div>
+			</form>
+		</div>
 {% endblock content %}
