@@ -247,6 +247,7 @@ Each step in any process involves a considerable amount of research.
 - Query optimization and soft delete implementation: 1 hour
 - Static files organization and UI templates: 1 hour
 - Research and connecting frontend to API: 45 minutes
+- Documentation and review: ~45 minutes
 
 ## Technical Challenges Faced
 
@@ -264,4 +265,73 @@ Each step in any process involves a considerable amount of research.
 **Challenge**: Not using Django REST Framework daily meant many conventions were unfamiliar, slowing down development as I had to frequently research best practices.  
 
 **Solution**: I dedicated extra time to read community resources, ensuring I followed DRF conventions.
+
+
+# DAY 5: Template & Static Refactor, Improved UI, and API Connection
+
+### ✅ Template and Static Structure Refactor
+- **URL Tag Usage**: Updated all template links in `home.html` and related templates to use Django's `{% url %}` tag for referencing internal routes, avoiding hardcoded URLs.
+
+- **.gitignore Update**: Added `.vscode` to `.gitignore` to prevent workspace-specific settings from being committed. This included settings for improved Django HTML auto-suggestions in VS Code.
+
+- **urls.py Improvements**: Refactored `django_backend/config/urls.py` for clarity and maintainability. Added `app_name` to `django_backend/apps/auth_jwt/urls.py` to enable namespaced URL referencing.
+
+- **Base Template Creation**: Introduced a `base.html` template as the main layout to inheritance another templates.
+
+- **Descriptive CSS Naming**: Renamed CSS files to be more descriptive and unique (e.g., `home.css` for `home.html`), resolving issues where Django's static file resolution would serve the wrong stylesheet if multiple files shared the same name.
+
+### ✅ Basic Frontend UI
+- **UI Completion**: Developed a basic frontend UI for the main pages, focusing on visual experience and usability.
+
+### ✅ API Connection & Code Updates
+- **View Updates**: Refactored views in the `auth_jwt` app to connect HTML forms with the API endpoints, enabling user registration and login via the frontend.
+
+- **Template Syntax Improvements**: Updated HTML templates to use best practices for anchor tags (`<a>`) and form submissions.
+
+- **Authentication State Handling**: Implemented logic to display a custom home page depending on whether the user is authenticated, providing a more dynamic user experience.
+
+- **Requirements Update**: Added the `requests` library to `requirements.txt` to facilitate API communication from HTML forms.
+
+## Key Technical Decisions
+
+### Static File Handling & CSS Naming
+- **Problem**: Encountered issues where extending `home.html` and adding `register.html` caused CSS conflicts—`home.css` would override styles in other templates, even with different routes.
+
+- **Solution**: After extensive research and troubleshooting, resolved the issue by renaming CSS files to unique, descriptive names (e.g., `home.css`, `register.css`). Learned that Django's static file resolution can serve the wrong file if multiple static files share the same name, regardless of their directory.
+
+### Template Inheritance & UI Structure
+- **Block System**: Adopted the use of a `base.html` template with content blocks, enabling code reuse and easier template inheritance.
+
+- **Font Integration**: Embedded the 'Roboto' font from Google Fonts for a clean and readable frontend appearance.
+
+### Frontend-API Integration
+- **API Connection**: Started connecting frontend forms to backend API endpoints using the `requests` library, laying the groundwork for JWT authentication.
+
+## Time Allocation Breakdown
+
+### DAY 5 (Template Refactor & API Connection) - ~9 hours
+- Template and static structure refactor: 2 hours
+- .gitignore and workspace settings: 15 minutes
+- Base template and CSS renaming: 1 hour
+- Frontend UI development: 3 hours
+- API connection and view updates: 2 hours
 - Documentation and review: ~45 minutes
+
+## Technical Challenges Faced
+
+### Static File Resolution
+- **Challenge**: Spent significant time troubleshooting why CSS from one template would override another, even with different routes and directories.
+
+- **Solution**: Discovered that Django's static file system can serve the wrong file if multiple static files share the same name. Renaming CSS files to unique names resolved the issue.
+
+### Template Inheritance Learning Curve
+- **Challenge**: Initially struggled with how Django's template inheritance and block system worked, especially when extending templates and managing shared content.
+
+- **Solution**: Through research and experimentation, learned to use a `base.html` with content blocks, making the template structure more intuitive and maintainable.
+
+### Frontend-Backend Integration
+- **Challenge**: Connecting HTML forms to API endpoints and handling authentication state in the UI required updating both views and templates.
+
+- **Solution**: Updated views to handle API requests and adjusted template logic to display different content based on authentication status.
+
+As a final thought for the day, I spent considerable time understanding how Django links static files through its block system. Once understood, it became intuitive, even though I haven’t worked deeply with Django before. I’m thankful for the challenge, as these kinds of obstacles always push me to improve and learn more.

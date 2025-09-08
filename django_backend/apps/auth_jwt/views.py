@@ -1,4 +1,5 @@
 import requests
+from django.conf import settings
 from django.shortcuts import (
 	render,
     redirect,
@@ -32,7 +33,7 @@ def register_view(request: HttpRequest) -> HttpResponse:
             "nickname": nickname,
         }
 		# 'web' is service name inside docker-compose.yml with django
-        api_url = f"http://web:8000/api/auth/register/"
+        api_url = f"{settings.API_BASE_URL}/api/auth/register/"
         try:
             response = requests.post(api_url, json=data)
             if response.status_code == 201:
@@ -52,7 +53,7 @@ def login_view(request: HttpRequest) -> HttpResponse:
 			"username": username,
 			"password": password,
 		}
-		api_url = f"http://web:8000/api/auth/login/"
+		api_url = f"{settings.API_BASE_URL}/api/auth/login/"
 		try:
 			response = requests.post(api_url, json=data)
 			if response.status_code == 200:

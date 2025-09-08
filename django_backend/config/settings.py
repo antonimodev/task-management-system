@@ -1,7 +1,6 @@
 from pathlib import Path
 import os
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
@@ -9,9 +8,10 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# Default is empty, in development statements gonna use all
-ALLOWED_HOSTS = ["*"]
+# Default is empty, in development statements use this list. Our service is called "web by default"
+ALLOWED_HOSTS = ["localhost","127.0.0.1","web"]
 
+API_BASE_URL = os.environ.get('API_BASE_URL', 'http://web:8000')
 
 INSTALLED_APPS = [
 	'rest_framework', # DRF (Django REST Framework)
@@ -76,10 +76,6 @@ DATABASES = {
 		'PORT': os.environ.get('POSTGRES_PORT', 5432),
     }
 }
-
-
-# Password validation
-# https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
