@@ -4,19 +4,28 @@
 {% block title %}Home - Sherpa Tribe{% endblock title %}
 
 {% block home-css %}
-	<link rel="stylesheet" href={% static "css/home.css" %}>
+    <link rel="stylesheet" href={% static "css/home.css" %}>
 {% endblock home-css %}
 
 {% block content %}
-	<p class="welcome-msg">
-		Welcome to Sherpa Task Management project, you can register here!
-	</p>
-	<div class="button-group">
-		<a href="{% url 'auth_jwt_html:register' %}">
-			<button class="button" type="button">Register</button>
-		</a>
-		<a href="{% url 'auth_jwt_html:login' %}">
-			<button class="button" type="button">Login</button>
-		</a>
-	</div>
+	{% if is_authenticated %}
+		<p class="welcome-msg">
+			Welcome back! You are logged in.
+		</p>
+		<div class="button-group">
+			<a href="#" class="button">View Tasks</a>
+			<a href="#" class="button">Add Task</a>
+			<a href="{% url 'auth_jwt_html:logout' %}" class="button logout-button">
+				Logout
+			</a>
+		</div>
+	{% else %}
+		<p class="welcome-msg">
+			Welcome to Sherpa Task Management project, you can register here!
+		</p>
+		<div class="button-group">
+			<a href="{% url 'auth_jwt_html:register' %}" class="button">Register</a>
+			<a href="{% url 'auth_jwt_html:login' %}" class="button">Login</a>
+		</div>
+	{% endif %}
 {% endblock content %}

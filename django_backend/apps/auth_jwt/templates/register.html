@@ -4,21 +4,25 @@
 {% block title %}Register - Sherpa Tribe{% endblock title %}
 
 {% block form-css %}
-    <link rel="stylesheet" href="{% static 'css/form.css' %}">
+<link rel="stylesheet" href="{% static 'css/form.css' %}">
 {% endblock form-css %}
 
 {% block content %}
 	<div class="form-container">
 		<h2>Register</h2>
-		<form method="post" action="{% url 'auth_jwt_api:register' %}">
+		<form method="post" action="">
 			{% csrf_token %}
 			<div class="form-group">
 				<label for="username">Username:</label>
-				<input type="text" name="username" id="username" required>
+				<input type="text" name="username" id="username" required value="{{ form_data.username|default:'' }}">
+			</div>
+			<div class="form-group">
+				<label for="nickname">Nickname:</label>
+				<input type="text" name="nickname" id="nickname" required value="{{ form_data.nickname|default:'' }}">
 			</div>
 			<div class="form-group">
 				<label for="email">Email:</label>
-				<input type="email" name="email" id="email" required>
+				<input type="email" name="email" id="email" required value="{{ form_data.email|default:'' }}">
 			</div>
 			<div class="form-group">
 				<label for="password">Password:</label>
@@ -28,11 +32,13 @@
 				<label for="confirm-password">Confirm Password:</label>
 				<input type="password" name="confirm-password" id="confirm-password" required>
 			</div>
-			{% comment %} Confirm register button redirects to home, where create task button is there {% endcomment %}
 			<div class="button-row">
 				<a href="{% url 'home' %}" class="register-button">Back</a>
-					<button type="submit" class="register-button">Confirm</button>
-				</div>
-			</form>
-		</div>
+				<button  class="register-button", type="submit">Confirm</button>
+			</div>
+		</form>
+		{% if error %}
+			<div class="error">{{ error }}</div>
+		{% endif %}
+	</div>
 {% endblock content %}
