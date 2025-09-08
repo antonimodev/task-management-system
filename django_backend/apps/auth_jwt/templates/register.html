@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Register - Sherpa Tribe{% endblock title %}
+
+{% block register-css %}
+    <link rel="stylesheet" href="{% static 'css/register.css' %}">
+{% endblock register-css %}
+
+{% block content %}
+	<div class="form-container">
+		<h2>Register</h2>
+		<form method="post" action="{% url 'auth_jwt_api:register' %}">
+			{% csrf_token %}
+			<div class="form-group">
+				<label for="username">Username:</label>
+				<input type="text" name="username" id="username" required>
+			</div>
+			<div class="form-group">
+				<label for="email">Email:</label>
+				<input type="email" name="email" id="email" required>
+			</div>
+			<div class="form-group">
+				<label for="password">Password:</label>
+				<input type="password" name="password" id="password" required>
+			</div>
+			<div class="form-group">
+				<label for="password2">Confirm Password:</label>
+				<input type="password" name="password2" id="password2" required>
+			</div>
+			<button type="register" class="register-button">Confirm register</button>
+		</form>
+	</div>
+{% endblock content %}

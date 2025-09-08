@@ -6,7 +6,8 @@ from rest_framework_simplejwt.views import (
     TokenBlacklistView,
 )
 
-# Authentication Endpoints
+app_name = 'auth_jwt_api'
+
 urlpatterns = [
     path('register/', RegisterView.as_view(), name='register'),
     path('login/', TokenObtainPairView.as_view(), name='login'),

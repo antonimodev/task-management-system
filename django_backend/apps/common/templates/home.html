@@ -1,20 +1,22 @@
+{% extends "base.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home - Sherpa Tribe</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-</head>
-<div class="top-bar"></div>
-<body>
-	<img class="main-logo" src="{% static 'img/sherpatribelogo.png' %}" alt="sherpa_logo">
-    <h1>Sherpa Task Management System</h1>
-    <p class="welcome-msg">Welcome to Sherpa task Management project, you can register here!</p>
+
+{% block title %}Home - Sherpa Tribe{% endblock title %}
+
+{% block home-css %}
+	<link rel="stylesheet" href={% static "css/home.css" %}>
+{% endblock home-css %}
+
+{% block content %}
+	<p class="welcome-msg">
+		Welcome to Sherpa Task Management project, you can register here!
+	</p>
 	<div class="button-group">
-        <a href="/api/auth/register"><button> Register </button></a>
-        <a href="/api/auth/login"><button> Login </button></a>
-    </div>
-</body>
-</html>
+		<a href="{% url 'auth_jwt_html:register' %}">
+			<button class="button" type="button">Register</button>
+		</a>
+		<a href="{% url 'auth_jwt_html:login' %}">
+			<button class="button" type="button">Login</button>
+		</a>
+	</div>
+{% endblock content %}

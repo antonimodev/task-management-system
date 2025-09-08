@@ -1,0 +1,26 @@
+.top-bar {
+    width: 100%;
+    height: 3rem;
+    margin-bottom: 1rem;
+    background-color: #2e3133;
+}
+
+.main-logo {
+    display: block;
+    margin: auto;
+}
+
+.welcome-msg {
+    text-align: center;
+}
+
+h1 {
+	text-align: center;
+}
+
+body {
+    background-color: #d4cdc3;
+    color: #363532;
+    margin: 0;
+	font-family: 'Roboto', Arial, Helvetica, sans-serif;
+}
