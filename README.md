@@ -53,5 +53,5 @@ This project has been a real challenge and a great learning experience. I’ve p
 Main focus was on getting the mandatory requirements, so time managament was crucial in this project.
 
 For API documentation and technical decisions, check out:
-- [API_DOCUMENTATION.md](docs/API_DOCUMENTATION.md) - Basic API reference
-- [DECISIONS.md](docs/DECISIONS.md) - My development process and challenges
+- [API_DOCUMENTATION.md](https://github.com/antonimodev/task-management-system/blob/main/docs/DECISIONS.md) - Basic API reference
+- [DECISIONS.md](https://github.com/antonimodev/task-management-system/blob/main/docs/API_DOC.md) - My development process and challenges
