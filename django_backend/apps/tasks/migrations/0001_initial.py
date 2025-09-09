@@ -7,81 +7,81 @@ import django.db.models.deletion
 
 class Migration(migrations.Migration):
 
-    initial = True
+	initial = True
 
-    dependencies = [
-        migrations.swappable_dependency(settings.AUTH_USER_MODEL),
-    ]
+	dependencies = [
+		migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+	]
 
-    operations = [
-        migrations.CreateModel(
-            name='Tag',
-            fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=50, unique=True)),
-            ],
-        ),
-        migrations.CreateModel(
-            name='Task',
-            fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=200)),
-                ('description', models.TextField()),
-                ('status', models.CharField(choices=[('pending', 'Pending'), ('in_progress', 'In Progress'), ('completed', 'Completed')], max_length=20)),
-                ('priority', models.CharField(choices=[('low', 'Low'), ('medium', 'Medium'), ('high', 'High'), ('extreme', 'Extreme')], max_length=20)),
-                ('due_date', models.DateTimeField()),
-                ('estimated_hours', models.DecimalField(decimal_places=2, max_digits=5)),
-                ('actual_hours', models.DecimalField(decimal_places=2, max_digits=5, null=True)),
-                ('metadata', models.JSONField(blank=True, default=dict, null=True)),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('is_archived', models.BooleanField(default=False)),
-            ],
-        ),
-        migrations.CreateModel(
-            name='TaskAssignment',
-            fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('assigned_at', models.DateTimeField(auto_now_add=True)),
-                ('assigned_by', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='assignments_made', to=settings.AUTH_USER_MODEL)),
-                ('task', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='tasks.task')),
-                ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
-            ],
-        ),
-        migrations.AddField(
-            model_name='task',
-            name='assigned_to',
-            field=models.ManyToManyField(related_name='assigned_tasks', through='tasks.TaskAssignment', to=settings.AUTH_USER_MODEL),
-        ),
-        migrations.AddField(
-            model_name='task',
-            name='created_by',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='created_tasks', to=settings.AUTH_USER_MODEL),
-        ),
-        migrations.AddField(
-            model_name='task',
-            name='parent_task',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='subtasks', to='tasks.task'),
-        ),
-        migrations.AddField(
-            model_name='task',
-            name='tags',
-            field=models.ManyToManyField(related_name='tasks', to='tasks.tag'),
-        ),
-        migrations.AddIndex(
-            model_name='taskassignment',
-            index=models.Index(fields=['user'], name='tasks_taska_user_id_d33430_idx'),
-        ),
-        migrations.AddIndex(
-            model_name='taskassignment',
-            index=models.Index(fields=['task'], name='tasks_taska_task_id_8a87ae_idx'),
-        ),
-        migrations.AddIndex(
-            model_name='taskassignment',
-            index=models.Index(fields=['assigned_at'], name='tasks_taska_assigne_604843_idx'),
-        ),
-        migrations.AlterUniqueTogether(
-            name='taskassignment',
-            unique_together={('user', 'task')},
-        ),
-    ]
+	operations = [
+		migrations.CreateModel(
+			name='Tag',
+			fields=[
+				('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+				('name', models.CharField(max_length=50, unique=True)),
+			],
+		),
+		migrations.CreateModel(
+			name='Task',
+			fields=[
+				('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+				('title', models.CharField(max_length=200)),
+				('description', models.TextField()),
+				('status', models.CharField(choices=[('pending', 'Pending'), ('in_progress', 'In Progress'), ('completed', 'Completed')], max_length=20)),
+				('priority', models.CharField(choices=[('low', 'Low'), ('medium', 'Medium'), ('high', 'High'), ('extreme', 'Extreme')], max_length=20)),
+				('due_date', models.DateTimeField()),
+				('estimated_hours', models.DecimalField(decimal_places=2, max_digits=5)),
+				('actual_hours', models.DecimalField(decimal_places=2, max_digits=5, null=True)),
+				('metadata', models.JSONField(blank=True, default=dict, null=True)),
+				('created_at', models.DateTimeField(auto_now_add=True)),
+				('updated_at', models.DateTimeField(auto_now=True)),
+				('is_archived', models.BooleanField(default=False)),
+			],
+		),
+		migrations.CreateModel(
+			name='TaskAssignment',
+			fields=[
+				('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+				('assigned_at', models.DateTimeField(auto_now_add=True)),
+				('assigned_by', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='assignments_made', to=settings.AUTH_USER_MODEL)),
+				('task', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='tasks.task')),
+				('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+			],
+		),
+		migrations.AddField(
+			model_name='task',
+			name='assigned_to',
+			field=models.ManyToManyField(related_name='assigned_tasks', through='tasks.TaskAssignment', to=settings.AUTH_USER_MODEL),
+		),
+		migrations.AddField(
+			model_name='task',
+			name='created_by',
+			field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='created_tasks', to=settings.AUTH_USER_MODEL),
+		),
+		migrations.AddField(
+			model_name='task',
+			name='parent_task',
+			field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='subtasks', to='tasks.task'),
+		),
+		migrations.AddField(
+			model_name='task',
+			name='tags',
+			field=models.ManyToManyField(related_name='tasks', to='tasks.tag'),
+		),
+		migrations.AddIndex(
+			model_name='taskassignment',
+			index=models.Index(fields=['user'], name='tasks_taska_user_id_d33430_idx'),
+		),
+		migrations.AddIndex(
+			model_name='taskassignment',
+			index=models.Index(fields=['task'], name='tasks_taska_task_id_8a87ae_idx'),
+		),
+		migrations.AddIndex(
+			model_name='taskassignment',
+			index=models.Index(fields=['assigned_at'], name='tasks_taska_assigne_604843_idx'),
+		),
+		migrations.AlterUniqueTogether(
+			name='taskassignment',
+			unique_together={('user', 'task')},
+		),
+	]

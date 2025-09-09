@@ -10,7 +10,7 @@ ENV PYTHONUNBUFFERED=1
 # Install only minimal system dependencies required for the app
 RUN apt-get update && apt-get install -y \
 	postgresql-client \
-    redis-tools
+	redis-tools
 
 COPY requirements.txt .
 

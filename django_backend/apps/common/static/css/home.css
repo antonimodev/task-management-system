@@ -1,27 +1,27 @@
 .button-group {
-    display: flex;
-    justify-content: center;
-    gap: 0.5rem;
-    margin-top: 1rem;
+	display: flex;
+	justify-content: center;
+	gap: 0.5rem;
+	margin-top: 1rem;
 }
 
 .button {
-    margin-top: 0.5rem;
-    padding: 0.7rem 1.5rem;
-    border: none;
-    border-radius: 0.5rem;
-    background: #bfa76f;
-    color: #fff;
-    font-size: 1.2rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background 0.5s;
+	margin-top: 0.5rem;
+	padding: 0.7rem 1.5rem;
+	border: none;
+	border-radius: 0.5rem;
+	background: #bfa76f;
+	color: #fff;
+	font-size: 1.2rem;
+	font-weight: bold;
+	cursor: pointer;
+	transition: background 0.5s;
 }
 
 .button:hover {
-    background: #a68c4a;
+	background: #a68c4a;
 }
 
 .button-group a {
-    text-decoration: none;
+	text-decoration: none;
 }

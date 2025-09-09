@@ -1,0 +1,91 @@
+/* Container for all tasks */
+.tasks-container {
+	max-width: 800px;
+	margin: 0 auto;
+	padding: 1rem;
+}
+
+/* Title */
+.tasks-container h2 {
+	text-align: center;
+	margin-bottom: 1rem;
+}
+
+/* Row of buttons */
+.button-row {
+	display: flex;
+	justify-content: center;
+	gap: 0.5rem;
+	margin-bottom: 2rem;
+}
+
+.button-row a {
+	text-decoration: none;
+}
+
+.button {
+	margin-top: 0.5rem;
+	padding: 0.7rem 1.5rem;
+	border: none;
+	border-radius: 0.5rem;
+	background: #bfa76f;
+	color: #fff;
+	font-size: 1.2rem;
+	font-weight: bold;
+	cursor: pointer;
+	transition: background 0.5s;
+}
+
+.button:hover {
+	background: #a68c4a;
+}
+
+
+/* Individual task card */
+.task-card {
+	background: #777771;
+	color: bisque;
+	padding: 1rem;
+	border-radius: 0.5rem;
+	margin-bottom: 1rem;
+}
+
+/* Task title */
+.task-card h3 {
+	margin: 0 0 0.5rem 0;
+	color: #afd1e7;
+}
+
+/* Task info */
+.task-card p {
+	margin: 0.25rem 0;
+}
+
+/* Assign form inside each card */
+.assign-form {
+	margin-top: 1rem;
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.assign-form select {
+	padding: 0.25rem;
+	border-radius: 0.25rem;
+	border: 1px solid #ccc;
+}
+
+.button.small {
+	padding: 0.4rem 0.8rem;
+	font-size: 0.9rem;
+}
+
+/* Error message */
+.error {
+	color: #ffb3b3;
+	background: #4a2323;
+	padding: 0.5rem 1rem;
+	border-radius: 0.5rem;
+	margin-top: 1rem;
+	text-align: center;
+}

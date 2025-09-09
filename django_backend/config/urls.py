@@ -5,7 +5,7 @@ from django.urls import (
 )
 
 urlpatterns = [
-    path('admin/', admin.site.urls, name='admin'),
+	path('admin/', admin.site.urls, name='admin'),
 	# COMMON
 	path('', include('apps.common.urls')),
 	# AUTH
@@ -14,5 +14,6 @@ urlpatterns = [
 	# USERS
 	path('api/users/', include('apps.users.urls')),
 	# TASK MANAGEMENT
-	path('api/tasks/', include('apps.tasks.urls')),
+	path('api/tasks/', include('apps.tasks.urls_api')),
+	path('tasks/', include('apps.tasks.urls_html'))
 ]

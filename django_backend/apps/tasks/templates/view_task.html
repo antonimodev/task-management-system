@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Tasks - Sherpa Tribe{% endblock title %}
+
+{% block home-css %}
+	<link rel="stylesheet" href="{% static 'css/view_task.css' %}">
+{% endblock home-css %}
+
+{% block content %}
+	<div class="tasks-container">
+		<h2>All Tasks</h2>
+		<div class="button-row">
+			<a href="{% url 'home' %}" class="button">Home</a>
+			<a href="{% url 'tasks_html:add_task' %}" class="button">Add Task</a>
+		</div>
+		{% if tasks %}
+			{% for task in tasks %}
+				<div class="task-card">
+					<h3>{{ task.title }}</h3>
+					<p><strong>Created by:</strong> {{ task.created_by }}</p>
+					<p><strong>Status:</strong> {{ task.status }}</p>
+					<p><strong>Priority:</strong> {{ task.priority }}</p>
+					<p><strong>Due Date:</strong> {{ task.due_date|slice:":16"}}</p>
+					<p><strong>Description:</strong> {{ task.description }}</p>
+				</div>
+			{% endfor %}
+		{% else %}
+			<p>No tasks found. <a href="{% url 'tasks_html:add_task' %}">Create one!</a></p>
+		{% endif %}
+		{% if error %}
+			<div class="error">{{ error }}</div>
+		{% endif %}
+	</div>
+{% endblock content %}

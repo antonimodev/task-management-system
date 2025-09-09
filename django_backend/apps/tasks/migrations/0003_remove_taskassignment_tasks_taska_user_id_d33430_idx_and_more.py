@@ -5,34 +5,34 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('tasks', '0002_default_tags'),
-    ]
+	dependencies = [
+		('tasks', '0002_default_tags'),
+	]
 
-    operations = [
-        migrations.RemoveIndex(
-            model_name='taskassignment',
-            name='tasks_taska_user_id_d33430_idx',
-        ),
-        migrations.RemoveIndex(
-            model_name='taskassignment',
-            name='tasks_taska_task_id_8a87ae_idx',
-        ),
-        migrations.RemoveIndex(
-            model_name='taskassignment',
-            name='tasks_taska_assigne_604843_idx',
-        ),
-        migrations.AlterUniqueTogether(
-            name='taskassignment',
-            unique_together=set(),
-        ),
-        migrations.AddField(
-            model_name='task',
-            name='is_deleted',
-            field=models.BooleanField(default=False),
-        ),
-        migrations.AddConstraint(
-            model_name='taskassignment',
-            constraint=models.UniqueConstraint(fields=('user', 'task'), name='unique_combination'),
-        ),
-    ]
+	operations = [
+		migrations.RemoveIndex(
+			model_name='taskassignment',
+			name='tasks_taska_user_id_d33430_idx',
+		),
+		migrations.RemoveIndex(
+			model_name='taskassignment',
+			name='tasks_taska_task_id_8a87ae_idx',
+		),
+		migrations.RemoveIndex(
+			model_name='taskassignment',
+			name='tasks_taska_assigne_604843_idx',
+		),
+		migrations.AlterUniqueTogether(
+			name='taskassignment',
+			unique_together=set(),
+		),
+		migrations.AddField(
+			model_name='task',
+			name='is_deleted',
+			field=models.BooleanField(default=False),
+		),
+		migrations.AddConstraint(
+			model_name='taskassignment',
+			constraint=models.UniqueConstraint(fields=('user', 'task'), name='unique_combination'),
+		),
+	]

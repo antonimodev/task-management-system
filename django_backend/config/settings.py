@@ -18,12 +18,12 @@ INSTALLED_APPS = [
 	'rest_framework_simplejwt', # JWT (Json Web Token)
 	'rest_framework_simplejwt.token_blacklist',
 	'django_filters',
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
+	'django.contrib.admin',
+	'django.contrib.auth',
+	'django.contrib.contenttypes',
+	'django.contrib.sessions',
+	'django.contrib.messages',
+	'django.contrib.staticfiles',
 
 	# Local apps
 	'apps.common',
@@ -35,13 +35,13 @@ INSTALLED_APPS = [
 AUTH_USER_MODEL = 'users.User'
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+	'django.middleware.security.SecurityMiddleware',
+	'django.contrib.sessions.middleware.SessionMiddleware',
+	'django.middleware.common.CommonMiddleware',
+	'django.middleware.csrf.CsrfViewMiddleware',
+	'django.contrib.auth.middleware.AuthenticationMiddleware',
+	'django.contrib.messages.middleware.MessageMiddleware',
+	'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -52,6 +52,7 @@ TEMPLATES = [
 		'DIRS': [
 			BASE_DIR / 'apps' / 'common' / 'templates',
 			BASE_DIR / 'apps' / 'auth_jwt' / 'templates',
+			BASE_DIR / 'apps' / 'tasks' / 'templates',
 		],
 		'APP_DIRS': True,
 		'OPTIONS': {
@@ -67,29 +68,29 @@ TEMPLATES = [
 WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+	'default': {
+		'ENGINE': 'django.db.backends.postgresql',
 		'NAME': os.environ.get('POSTGRES_DB'),
 		'USER': os.environ.get('POSTGRES_USER'),
 		'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
 		'HOST': os.environ.get('POSTGRES_HOST', 'db'),
 		'PORT': os.environ.get('POSTGRES_PORT', 5432),
-    }
+	}
 }
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+	{
+		'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+	},
+	{
+		'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+	},
+	{
+		'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+	},
+	{
+		'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+	},
 ]
 
 LANGUAGE_CODE = 'en-us'
@@ -103,8 +104,9 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 STATICFILES_DIRS = [
-    BASE_DIR / 'apps' / 'common' / 'static',
-    BASE_DIR / 'apps' / 'auth_jwt' / 'static',
+	BASE_DIR / 'apps' / 'common' / 'static',
+	BASE_DIR / 'apps' / 'auth_jwt' / 'static',
+	BASE_DIR / 'apps' / 'tasks' / 'static',
 ]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

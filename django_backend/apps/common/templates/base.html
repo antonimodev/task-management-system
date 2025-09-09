@@ -2,24 +2,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>
 		{% block title %}Sherpa Tribe{% endblock title %}
 	</title>
-    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+	<link rel="stylesheet" href="{% static 'css/base.css' %}">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-    {% block home-css %}{% endblock home-css %}
+	{% block home-css %}{% endblock home-css %}
 	{% block form-css %}{% endblock form-css %}
 </head>
 <body>
-    <div class="top-bar"></div>
-    <img class="main-logo" src="{% static 'img/sherpatribelogo.png' %}" alt="Sherpa Tribe Logo">
-    <h1>
+	<div class="top-bar"></div>
+	<img class="main-logo" src="{% static 'img/sherpatribelogo.png' %}" alt="Sherpa Tribe Logo">
+	<h1>
 		Sherpa Task Management System
 	</h1>
-    {% block content %}{% endblock content %}
+	{% block content %}{% endblock content %}
 </body>
 </html>

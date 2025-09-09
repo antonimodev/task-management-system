@@ -5,7 +5,7 @@ set -e
 echo "Waiting for database..."
 while ! pg_isready -h $POSTGRES_HOST -p $POSTGRES_PORT -U $POSTGRES_USER; do
 	echo "Database is unavailable, wait . . ."
-    sleep 2
+	sleep 2
 done
 echo "Database is up!"
 
@@ -25,9 +25,9 @@ python manage.py shell << END
 from django.contrib.auth import get_user_model
 User = get_user_model()
 user, created = User.objects.get_or_create(
-    username='$DJANGO_SUPERUSER_USERNAME',
-    email='$DJANGO_SUPERUSER_EMAIL',
-    defaults={'nickname': '$DJANGO_SUPERUSER_NICKNAME'}
+	username='$DJANGO_SUPERUSER_USERNAME',
+	email='$DJANGO_SUPERUSER_EMAIL',
+	defaults={'nickname': '$DJANGO_SUPERUSER_NICKNAME'}
 )
 user.nickname = '$DJANGO_SUPERUSER_NICKNAME'
 user.set_password('$DJANGO_SUPERUSER_PASSWORD')

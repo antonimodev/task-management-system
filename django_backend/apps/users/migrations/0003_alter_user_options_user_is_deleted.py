@@ -5,18 +5,18 @@ from django.db import migrations, models
 
 class Migration(migrations.Migration):
 
-    dependencies = [
-        ('users', '0002_user_nickname'),
-    ]
+	dependencies = [
+		('users', '0002_user_nickname'),
+	]
 
-    operations = [
-        migrations.AlterModelOptions(
-            name='user',
-            options={},
-        ),
-        migrations.AddField(
-            model_name='user',
-            name='is_deleted',
-            field=models.BooleanField(default=False),
-        ),
-    ]
+	operations = [
+		migrations.AlterModelOptions(
+			name='user',
+			options={},
+		),
+		migrations.AddField(
+			model_name='user',
+			name='is_deleted',
+			field=models.BooleanField(default=False),
+		),
+	]
