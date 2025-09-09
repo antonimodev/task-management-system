@@ -53,5 +53,35 @@ services:
       timeout: 10s
       retries: 5
 
+  celery:
+    build: ./django_backend
+    container_name: celery
+    restart: always
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    command: ["celery", "-A", "config", "worker", "--loglevel=info"]
+    volumes:
+      - ./django_backend:/app
+
+  celery-beat:
+    build: ./django_backend
+    container_name: celery-beat
+    restart: always
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    command: ["celery", "-A", "config", "beat", "--loglevel=info"]
+    volumes:
+      - ./django_backend:/app
+
 volumes:
   postgres_data:

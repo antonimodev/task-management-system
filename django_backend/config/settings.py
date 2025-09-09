@@ -1,5 +1,6 @@
-from pathlib import Path
 import os
+from pathlib import Path
+from celery.schedules import crontab
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -118,4 +119,22 @@ REST_FRAMEWORK = {
 	'DEFAULT_PERMISSION_CLASSES': (
 		'rest_framework.permissions.IsAuthenticated',
 	)
+}
+
+CELERY_BROKER_URL = os.environ.get("CELERY_BROKER_URL", "redis://redis:6379/0")
+CELERY_RESULT_BACKEND = os.environ.get("CELERY_RESULT_BACKEND", "redis://redis:6379/0")
+
+CELERY_ACCEPT_CONTENT = ["json"]
+CELERY_TASK_SERIALIZER = "json"
+CELERY_RESULT_SERIALIZER = "json"
+
+CELERY_BEAT_SCHEDULE = {
+    "check-overdue-every-1-min": {
+        "task": "apps.tasks.tasks.check_overdue_tasks",
+        "schedule": 60,
+    },
+    "cleanup-archived-daily": {
+        "task": "apps.tasks.tasks.cleanup_archived_tasks",
+        "schedule": crontab(hour=8, minute=30),
+    },
 }

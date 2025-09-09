@@ -4,3 +4,5 @@ djangorestframework>=3.14.0 # DRF (Django REST Framework)
 djangorestframework-simplejwt>=5.5.1 # JWT (Json web token)
 django-filter>=25.0 # Django recommends this one to filter
 requests>=2.3 # To connect HTTP-API
+celery>=5.0 # Celery to create automated and async tasks
+redis>=4.0 # Nedeed for celery beats service

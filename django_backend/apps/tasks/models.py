@@ -43,15 +43,6 @@ class Task(SoftDeleteModel, models.Model):
 	updated_at = models.DateTimeField(auto_now=True)
 	is_archived = models.BooleanField(default=False)
 
-'''
-Notes:
-- Defining a __str__ method for Task would improve admin readability.
-I am not adding it to strictly follow the provided technical test requirements.
-
-- Some fields needs more arguments to work properly with Django, so I added
-some of them to make it work
-'''
-
 class TaskAssignment(models.Model):
 	user = models.ForeignKey(User, on_delete=models.CASCADE)
 	task = models.ForeignKey(Task, on_delete=models.CASCADE)
