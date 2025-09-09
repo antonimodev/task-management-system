@@ -67,7 +67,7 @@ class TaskAssignView(APIView):
 				{'detail': 'Forbidden'},
 				status=status.HTTP_403_FORBIDDEN)
 
-		assigned_user_id = request.data.get('assigned_user_id') # Name to get it from frontend
+		assigned_user_id = request.data.get('assigned_user_id')
 		if not assigned_user_id:
 			return Response(
 				{'assigned_user_id': 'This field is required.'},

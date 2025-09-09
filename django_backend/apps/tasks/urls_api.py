@@ -10,6 +10,5 @@ app_name = "tasks_api"
 urlpatterns = [
 	path('', TaskListView.as_view(), name='task_list'),
 	path('<int:pk>/', TaskDetailView.as_view(), name='task_detail'),
-	# Pending test with frontend
 	path('<int:pk>/assign', TaskAssignView.as_view(), name='task_assignment'),
 ]

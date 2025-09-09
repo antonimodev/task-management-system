@@ -206,6 +206,7 @@ Each step in any process involves a considerable amount of research.
 - **Solution**: To prioritize my time, I chose the first option and used a data migration to automatically create default tags for testing and initial use.
 
 
+
 # DAY 4: Backend Optimization, Task Assignment Endpoint & Frontend Integration
 
 ### ✅ Backend Optimization & New Endpoints
@@ -265,6 +266,7 @@ Each step in any process involves a considerable amount of research.
 **Challenge**: Not using Django REST Framework daily meant many conventions were unfamiliar, slowing down development as I had to frequently research best practices.  
 
 **Solution**: I dedicated extra time to read community resources, ensuring I followed DRF conventions.
+
 
 
 # DAY 5: Template & Static Refactor, Improved UI, and API Connection
@@ -334,4 +336,108 @@ Each step in any process involves a considerable amount of research.
 
 - **Solution**: Updated views to handle API requests and adjusted template logic to display different content based on authentication status.
 
+## Personal Reflection
+
 As a final thought for the day, I spent considerable time understanding how Django links static files through its block system. Once understood, it became intuitive, even though I haven’t worked deeply with Django before. I’m thankful for the challenge, as these kinds of obstacles always push me to improve and learn more.
+
+
+
+# DAY 6: Task Frontend Integration & Celery Implementation
+
+### ✅ Task Management Frontend
+- **Task Templates**: Created [`django_backend/apps/tasks/templates/add_task.html`](django_backend/apps/tasks/templates/add_task.html) and [`django_backend/apps/tasks/templates/view_task.html`](django_backend/apps/tasks/templates/view_task.html) to provide a more complete frontend interface for task management.
+
+- **URL Separation**: Split URLs in [`django_backend/apps/tasks/`](django_backend/apps/tasks/) into [`urls_api.py`](django_backend/apps/tasks/urls_api.py) and [`urls_html.py`](django_backend/apps/tasks/urls_html.py) for better organization and separation of concerns between API endpoints and HTML views.
+
+- **Settings Update**: Updated [`django_backend/config/settings.py`](django_backend/config/settings.py) to include new template and static file paths for the tasks app, ensuring Django can properly locate and serve the new frontend components.
+
+### ✅ Frontend-API Integration
+- **Form-API Connection**: Created two main functions in [`django_backend/apps/tasks/views.py`](django_backend/apps/tasks/views.py) to connect HTML forms with API endpoints:
+  - `add_task_view()` - Handles task creation through frontend forms
+  - `view_tasks_view()` - Displays tasks fetched from API endpoints
+
+- **Automatic Field Population**: Implemented automatic `created_by` field population using `request.user.id` from the active session, eliminating the need for users to manually specify task creators.
+
+- **Code Refactoring**: Refactored view functions multiple times to improve readability and maintainability, creating helper functions like `get_task_form_data()`.
+
+### ✅ Celery Background Tasks Implementation
+- **Celery Configuration**: Created [`django_backend/config/celery.py`](django_backend/config/celery.py) with proper Django integration and autodiscovery settings.
+
+- **Celery Dependencies**: Added `celery>=5.0` and `django-celery-beat>=2.5.0` to [`requirements.txt`](django_backend/requirements.txt) for background task processing and database scheduling.
+
+- **Docker Services**: Updated [`docker-compose.yml`](docker-compose.yml) to include `celery` and `celery-beat` services with proper dependencies and Redis integration.
+
+- **Celery Integration**: Updated [`django_backend/config/__init__.py`](django_backend/config/__init__.py) to automatically start Celery workers when Django starts.
+
+- **Scheduled Tasks**: Implemented two background tasks in [`django_backend/apps/tasks/tasks.py`](django_backend/apps/tasks/tasks.py):
+  - `check_overdue_tasks()` - Automatically marks tasks as overdue when they pass their due date (tested).
+  - `cleanup_archived_tasks()` - Removes old archived tasks to maintain database performance (not tested).
+
+- **Beat Schedule**: Configured [`CELERY_BEAT_SCHEDULE`](django_backend/config/settings.py) in settings to run overdue checks every minute and cleanup daily at 8:30 AM.
+
+### ✅ Code Quality & Compatibility Improvements
+- **Code Standardization**: Updated all indentation from 4 spaces to 1 tab (4 spaces) throughout the codebase for consistency.
+
+- **Docker Compatibility**: Adjusted [`docker-compose.yml`](docker-compose.yml) commands to use `sh` for better cross-platform compatibility, especially for Windows development environments.
+
+## Key Technical Decisions
+
+### Celery Architecture
+- **Task Design**: Implemented Celery tasks that are both useful for the application (overdue checking) and demonstrate background processing capabilities as required by test.
+
+- **Database Scheduler**: I used `django-celery-beat` for scheduling background tasks because it’s the most common way to manage periodic jobs in Django projects. Honestly, I followed the official docs and community/AI examples to understand this part, remembered me crontab from Linux.
+
+## Time Allocation Breakdown
+
+### DAY 6 (Frontend Integration & Celery) - ~8-9 hours
+- Task templates and frontend interface: 1.5 hours
+- URL organization and settings updates: 1 hour  
+- Form-API connection and view functions: 2 hours
+- Celery configuration and Docker integration: 2 hours
+- Code refactoring and standardization: 45 minutes
+- Testing and debugging: 1 hour
+- Documentation updates: 2 hour
+
+## Technical Challenges Faced
+
+### Form Field Mapping
+- **Challenge**: Struggled to properly map form data to model fields, especially handling required fields like tags and `created_by` that shouldn't be manually entered by users.
+
+- **Solution**: Researched Django form handling best practices and implemented automatic field population for `created_by` using session data. Used existing default tags from previous migrations to handle tag requirements.
+
+### Celery Learning Curve  
+- **Challenge**: First time implementing Celery with Django, requiring research into proper configuration, Docker integration, and task scheduling.
+
+- **Solution**: Followed Django-Celery documentation step by step, ensuring proper Redis broker configuration and testing with simple tasks before implementing the final scheduled tasks, AI was a good support in this part.
+
+### Docker Service Dependencies
+- **Challenge**: Ensuring proper startup order for Celery services that depend on both database and Redis being healthy.
+
+- **Solution**: Used Docker Compose health checks and service dependencies to ensure services start in the correct order, preventing connection errors during container startup.
+
+### Code Organization & Maintenance
+- **Challenge**: As the project grew, maintaining clean code organization became more important, especially with multiple view functions handling similar logic.
+
+- **Solution**: Implemented code refactoring passes to extract common functionality into helper functions.
+
+## Personal Reflection
+Day 6 marked a significant milestone in bringing together all the pieces of the application. The integration of frontend forms with API endpoints felt like a major achievement, especially after struggling with Django's conventions in earlier days.
+
+The automatic overdue task detection working correctly gave me confidence that the application was becoming truly functional rather than just a collection of endpoints.
+
+
+# Trade-offs
+
+For the trade-offs, I decided to skip some of the more advanced API endpoints at the end, like full task operations (assign, comments, history), so I could focus on building a basic frontend interface with a bit of styling to make it look more appealing. On the frontend side, I also left out features like deleting, editing, or assigning tasks through the UI, because I needed to spend time getting the Celery tasks working.
+
+Overall, I tried to follow the recommended schedule and prioritized the things that felt more familiar to me, even though most of this was new! My main goal was to organize my time as best as I could. I chose to work on the frontend before Celery and other backend features because I wanted to test things in a more user-friendly way, instead of just using ModHeader for authentication tokens or jumping between API endpoints.
+
+# Things I Would Add or Improve With More Time
+
+If I had more time, I would focus on finishing the frontend interface to make it fully user-friendly and cover all the main features (like editing, deleting, and assigning tasks directly from the UI) including profile editing that actually is implemented in API but not in frontend interface. Once the frontend was more complete, I’d go back to the API and finish the remaining endpoints, making sure that for every new feature, there’s a clear flow from API to frontend.
+
+I also think it would be great to let users create groups or teams, where someone can be an admin for their group and assign tasks to other members. This would allow for more real-world scenarios and flexible task management.
+
+# Justification for Using Django Templates for the Frontend
+
+I picked Django templates for the frontend because they’re simple to set up and work smoothly with Django views and forms. Even though I don’t have much frontend experience, I liked how you can reuse code blocks and styles, making everything feel modular almost like backend code. There’s probably a lot more you can do with them, and I’d like to explore that in the future, but for now, this approach let me focus on building and connecting features without getting stuck on extra frameworks or setup.
