@@ -1,10 +1,8 @@
 services:
   db:
     image: postgres:15
-    container_name: db
+    container_name: postgres_db
     restart: always
-    env_file:
-      - .env
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
@@ -21,10 +19,12 @@ services:
 
   redis:
     image: redis:7
-    container_name: redis
+    container_name: redis_cache
     restart: always
     ports:
       - "${REDIS_PORT}:6379"
+    volumes:
+      - redis_data:/data
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
       interval: 10s
@@ -42,11 +42,13 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
+      celery:
+        condition: service_started
     ports:
       - "8000:8000"
     volumes:
       - ./django_backend:/app
-    command: ["/app/scripts/entrypoint.sh"]
+    command: ["sh", "-c", "sed -i 's/\\r$//' /app/scripts/entrypoint.sh && sh /app/scripts/entrypoint.sh"]
     healthcheck:
       test: ["CMD-SHELL", "curl --fail http://localhost:8000/health/ || exit 1"]
       interval: 30s
@@ -55,7 +57,7 @@ services:
 
   celery:
     build: ./django_backend
-    container_name: celery
+    container_name: celery_worker
     restart: always
     env_file:
       - .env
@@ -64,13 +66,13 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
-    command: ["celery", "-A", "config", "worker", "--loglevel=info"]
     volumes:
       - ./django_backend:/app
+    command: ["sh", "-c", "celery -A config worker --loglevel=info"]
 
   celery-beat:
     build: ./django_backend
-    container_name: celery-beat
+    container_name: celery_beat
     restart: always
     env_file:
       - .env
@@ -79,9 +81,12 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
-    command: ["celery", "-A", "config", "beat", "--loglevel=info"]
+      celery:
+        condition: service_started
     volumes:
       - ./django_backend:/app
+    command: ["sh", "-c", "celery -A config beat --loglevel=info"]
 
 volumes:
   postgres_data:
+  redis_data:

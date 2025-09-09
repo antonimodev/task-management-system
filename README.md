@@ -12,7 +12,7 @@ A Django-based task management system with Docker orchestration, Celery backgrou
 ## Quick Start
 ```bash
 git clone <repo>
-cd sherpa
+cd task-management-system
 cp .env.sample .env
 docker-compose up
 ```
